@@ -4,7 +4,7 @@ import { ShoppingCartContext } from '../../Context'
 import { ShoppingBagIcon } from '@heroicons/react/24/solid'
 
 function Navbar () {
-  const { cartProducts, openCheckoutSideMenu } = useContext(ShoppingCartContext)
+  const { cartProducts, openCheckoutSideMenu, categories, setSearchByCategory } = useContext(ShoppingCartContext)
   const activeNavLink = 'underline underline-offset-4'
 
   return (
@@ -20,57 +20,26 @@ function Navbar () {
         <li>
           <NavLink
             to='/'
+            onClick={() => setSearchByCategory('')}
             className={({ isActive }) =>
               isActive ? activeNavLink : ''}
           >
             All
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to='/clothes'
-            className={({ isActive }) =>
-              isActive ? activeNavLink : ''}
-          >
-            Clothes
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/electronics'
-            className={({ isActive }) =>
-              isActive ? activeNavLink : ''}
-          >
-            Electronics
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/furnitures'
-            className={({ isActive }) =>
-              isActive ? activeNavLink : ''}
-          >
-            Furnitures
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/toys'
-            className={({ isActive }) =>
-              isActive ? activeNavLink : ''}
-          >
-            Toys
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/others'
-            className={({ isActive }) =>
-              isActive ? activeNavLink : ''}
-          >
-            Others
-          </NavLink>
-        </li>
+        {/* Categories */}
+        {categories?.map(category => (
+          <li key={category}>
+            <NavLink
+              to={`/${category}`}
+              onClick={() => setSearchByCategory(category)}
+              className={({ isActive }) =>
+                isActive ? activeNavLink : ''}
+            >
+              {category}
+            </NavLink>
+          </li>
+        ))}
       </ul>
 
       <ul className='flex items-center gap-3'>
